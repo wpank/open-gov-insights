@@ -13,8 +13,14 @@
   }
 }
 
+.body {
+  background: black;
+}
+
 .App-header {
-  background-color: #282c34;
+  background: linear-gradient(300deg, rgba(20,5,35,1), rgba(22,5,39,1), rgba(50,29,71,1));
+  background-size: 300% 300%;
+  animation: gradient-animation 18s ease infinite;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,6 +28,18 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .App-link {
