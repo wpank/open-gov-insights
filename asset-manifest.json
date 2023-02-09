@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/open-gov-insights/static/css/main.676268ab.css",
-    "main.js": "/open-gov-insights/static/js/main.dfde2925.js",
+    "main.css": "/open-gov-insights/static/css/main.51a0d218.css",
+    "main.js": "/open-gov-insights/static/js/main.d07a2159.js",
     "static/js/787.d277a734.chunk.js": "/open-gov-insights/static/js/787.d277a734.chunk.js",
     "index.html": "/open-gov-insights/index.html",
-    "main.676268ab.css.map": "/open-gov-insights/static/css/main.676268ab.css.map",
-    "main.dfde2925.js.map": "/open-gov-insights/static/js/main.dfde2925.js.map",
+    "main.51a0d218.css.map": "/open-gov-insights/static/css/main.51a0d218.css.map",
+    "main.d07a2159.js.map": "/open-gov-insights/static/js/main.d07a2159.js.map",
     "787.d277a734.chunk.js.map": "/open-gov-insights/static/js/787.d277a734.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.676268ab.css",
-    "static/js/main.dfde2925.js"
+    "static/css/main.51a0d218.css",
+    "static/js/main.d07a2159.js"
   ]
 }
