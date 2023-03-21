@@ -1,10 +1,100 @@
+#root {
+  background-color: #000000;
+  background-image: url('https://www.transparenttextures.com/patterns/subtle-dots.png');
+}
+
+* {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  /*-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);*/
+  /*-webkit-border-radius: 5px;*/
+  background: transparent;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: rgba(85, 43, 191, 1);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(68, 34, 153, 1);
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+}
+
+a:-webkit-any-link {
+  text-decoration: none !important;
+}
+
 .App {
   text-align: center;
+  font-family: 'Unbounded', serif;
+
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+
+  background: linear-gradient(
+    230deg,
+    rgba(230, 0, 122, 0.35),
+    rgba(68, 34, 153, 0.15),
+    rgba(50, 29, 71, 0.25),
+    rgba(109, 58, 238, 0.4)
+  );
+  background-size: 240% 240%;
+  animation: gradient-animation 24s ease infinite;
+  min-height: 93vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+body::before,
+body::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: '';
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  mix-blend-mode: darken;
+  mix-blend-mode: difference;
+  mix-blend-mode: exclusion;
+  mix-blend-mode: multiply;
+}
+
+body::before {
+  background: #000;
+  filter: url(#noiseFilter);
+}
+
+body::after {
+  background: url('https://assets.codepen.io/17119/wolves.svg') center center
+    no-repeat;
+  background-size: cover;
+  filter: contrast(100%) brightness(150%);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -13,21 +103,7 @@
   }
 }
 
-.body {
-  background: black;
-}
-
-.App-header {
-  background: linear-gradient(300deg, rgba(20,5,35,1), rgba(22,5,39,1), rgba(50,29,71,1));
-  background-size: 300% 300%;
-  animation: gradient-animation 18s ease infinite;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.gradient-background {
 }
 
 @keyframes gradient-animation {
@@ -39,18 +115,5 @@
   }
   100% {
     background-position: 0% 50%;
-  }
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
   }
 }
