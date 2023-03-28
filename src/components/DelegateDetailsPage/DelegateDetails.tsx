@@ -55,9 +55,7 @@ export const getScore = (score: any) => {
           sx={{ m: 8 }}
           title={
             <>
-              <Typography color="inherit">Line one</Typography>
-              <br />
-              <Typography color="inherit">Line two</Typography>
+              <Typography color="inherit">{tooltipText}</Typography>
             </>
           }
         >

@@ -131,7 +131,7 @@ function ReferendumItem(props: { referendum: ReferendumProps }) {
   }
 
   return (
-    <ListItem alignItems="flex-start" sx={{ px: {xs: 0, md: 8} }}>
+    <ListItem alignItems="flex-start" sx={{ px: {xs: 8, md: 8} }}>
       <ListItemButton
         component="a"
         href={`/#/referenda/${props.referendum.index}`}
@@ -149,7 +149,7 @@ function ReferendumItem(props: { referendum: ReferendumProps }) {
               border: '0.1px solid  rgba(230,0,122,0.6)',
               boxShadow: '0 3px 5px 2px rgba(230,0,122,0.25)',
               mr: {xs: 0,md: 3},
-                display: {xs: 'none', md: 'block'}
+                display: {xs: 'none', md: 'flex'}
             }}
             variant="rounded"
             // src={g}

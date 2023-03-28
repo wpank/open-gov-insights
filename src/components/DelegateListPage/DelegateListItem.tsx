@@ -99,6 +99,7 @@ export const getDelegateAvatar = (delegate: any) => {
             border: '0.1px solid  rgba(86,243,154,1)',
             boxShadow: '0 3px 5px 2px rgba(86,243,154,0.25)',
             mr: 2,
+              ml: {xs: 0, md: 8}
           }}
         />
         // </Tooltip>
@@ -115,6 +116,7 @@ export const getDelegateAvatar = (delegate: any) => {
             border: '0.1px solid  rgba(230,0,122,0.6)',
             boxShadow: '0 3px 5px 2px rgba(230,0,122,0.3)',
             mr: 2,
+              ml: {xs: 0, md: 8}
           }}
         >
           <Identicon theme={'polkadot'} size={60} value={delegate.address} />
@@ -358,7 +360,7 @@ export default function DelegateListItem(props: {
                   label={`${props.delegate.voteCount} Votes`}
                 />
               </Grid>
-              <Grid item container xs={12} md={9}  justifyContent={{xs: 'center', md: 'flex-end'}}>
+              <Grid item container xs={12} md={6}  justifyContent={{xs: 'center', md: 'flex-end'}}>
                 <Chip
                   sx={{
                     background:
@@ -397,7 +399,7 @@ export default function DelegateListItem(props: {
                 )}
               </Grid>
 
-              <Grid item container xs={12} md={5}  justifyContent={{xs: 'center', md: 'flex-end'}}>
+              <Grid item container xs={12} md={3}  justifyContent={{xs: 'center', md: 'flex-end'}}>
                 {props.delegate.castedCount > 0 && (
                   <Chip
                     sx={{

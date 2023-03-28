@@ -530,7 +530,7 @@ export default function DelegateDelegations(props: {
                       {props.delegation.trackName}
                     </Typography>
                   </Grid>
-                  {/*<Grid item xs={12} md={4}>*/}
+                  <Grid item xs={12} md={4}>
                   {/*  <StyledToggleButtonGroup*/}
                   {/*    value={filterParam}*/}
                   {/*    exclusive*/}
@@ -577,7 +577,7 @@ export default function DelegateDelegations(props: {
                   {/*      6x*/}
                   {/*    </StyledToggleButton>*/}
                   {/*  </StyledToggleButtonGroup>*/}
-                  {/*</Grid>*/}
+                  </Grid>
                 </Grid>
               </Box>
               <Divider />
