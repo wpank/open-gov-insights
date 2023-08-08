@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/static/css/main.a324c6cd.css",
-    "main.js": "/static/js/main.3d5c6ca9.js",
+    "main.js": "/static/js/main.7f980829.js",
     "static/js/787.d277a734.chunk.js": "/static/js/787.d277a734.chunk.js",
     "static/media/subscan.svg": "/static/media/subscan.c754f0efe0bc6e1d9ffb754d24d18bbd.svg",
     "static/media/logo.svg": "/static/media/logo.4cae881146ddb5a9cac37c098419bcce.svg",
     "index.html": "/index.html",
     "static/media/polkadot-logo.svg": "/static/media/polkadot-logo.ad90284c736f0545a0c76058b9dbf5de.svg",
     "main.a324c6cd.css.map": "/static/css/main.a324c6cd.css.map",
-    "main.3d5c6ca9.js.map": "/static/js/main.3d5c6ca9.js.map",
+    "main.7f980829.js.map": "/static/js/main.7f980829.js.map",
     "787.d277a734.chunk.js.map": "/static/js/787.d277a734.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a324c6cd.css",
-    "static/js/main.3d5c6ca9.js"
+    "static/js/main.7f980829.js"
   ]
 }
