@@ -20,8 +20,14 @@ import HowToRegIcon from '@mui/icons-material/HowToReg'
 import SchemaIcon from '@mui/icons-material/Schema'
 import Groups3Icon from '@mui/icons-material/Groups3'
 import { ReactComponent as Logo } from '../icons/logo.svg'
+import { ReactComponent as PolkadotLogo } from '../icons/polkadot-logo.svg'
 
 import { useNavigate } from 'react-router-dom'
+import { useNetwork } from '../NetworkContext'
+import Grid from '@mui/material/Grid'
+import { StyledToggleButton, StyledToggleButtonGroup } from './Chart'
+import PendingIcon from '@mui/icons-material/Pending'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 const pages = [
   { name: 'Stats', icon: BarChartIcon },
@@ -33,6 +39,8 @@ const pages = [
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 function ResponsiveAppBar() {
+  const { network, setNetwork } = useNetwork()
+
   const navigate = useNavigate()
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -54,6 +62,25 @@ function ResponsiveAppBar() {
     setAnchorElUser(null)
   }
 
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    network: string
+  ) => {
+    if (network == 'Polkadot') {
+      setNetwork({
+        name: 'Polkadot',
+        symbol: 'DOT',
+        url: 'https://polkadot-staging.w3f.community',
+      })
+    } else {
+      setNetwork({
+        name: 'Kusama',
+        symbol: 'KSM',
+        url: 'https://kusama-staging.w3f.community',
+      })
+    }
+  }
+
   return (
     <AppBar
       position="static"
@@ -63,7 +90,7 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <SvgIcon color="primary" style={{ fontSize: 40 }}>
-            <Logo />
+            {network.name == 'Polkadot' ? <PolkadotLogo /> : <Logo />}
           </SvgIcon>
           <Typography
             variant="h6"
@@ -135,6 +162,37 @@ function ResponsiveAppBar() {
                   </Typography>
                 </MenuItem>
               ))}
+              <MenuItem>
+                <Grid
+                  item
+                  xs={12}
+                  md={5}
+                  sx={{ pb: { xs: 2, md: 0 } }}
+                  container
+                  justifyContent={{ xs: 'center', md: 'flex-end' }}
+                >
+                  <StyledToggleButtonGroup
+                    value={network.name}
+                    exclusive
+                    onChange={handleChange}
+                    aria-label="FilterParam"
+                    size="small"
+                  >
+                    <StyledToggleButton value="Kusama">
+                      <SvgIcon sx={{ pr: 1 }} color="primary">
+                        <Logo />
+                      </SvgIcon>
+                      Kusama
+                    </StyledToggleButton>
+                    <StyledToggleButton value="Polkadot">
+                      <SvgIcon sx={{ pr: 1 }} color="primary">
+                        <PolkadotLogo />
+                      </SvgIcon>
+                      Polkadot
+                    </StyledToggleButton>
+                  </StyledToggleButtonGroup>
+                </Grid>
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -179,6 +237,35 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
+          <Grid
+            item
+            xs={12}
+            md={5}
+            sx={{ display: { xs: 'none', md: 'block' }, pb: { xs: 2, md: 0 } }}
+            container
+            justifyContent={{ xs: 'center', md: 'flex-end' }}
+          >
+            <StyledToggleButtonGroup
+              value={network.name}
+              exclusive
+              onChange={handleChange}
+              aria-label="FilterParam"
+              size="small"
+            >
+              <StyledToggleButton value="Kusama">
+                <SvgIcon sx={{ pr: 1 }} color="primary">
+                  <Logo />
+                </SvgIcon>
+                Kusama
+              </StyledToggleButton>
+              <StyledToggleButton value="Polkadot">
+                <SvgIcon sx={{ pr: 1 }} color="primary">
+                  <PolkadotLogo />
+                </SvgIcon>
+                Polkadot
+              </StyledToggleButton>
+            </StyledToggleButtonGroup>
+          </Grid>
         </Toolbar>
       </Container>
     </AppBar>

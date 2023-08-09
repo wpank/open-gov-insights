@@ -45,7 +45,8 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 import PeopleIcon from '@mui/icons-material/People'
 import { StyledToggleButton, StyledToggleButtonGroup } from './Chart'
 import { debounce } from 'lodash'
-import useMediaQuery from "@mui/material/useMediaQuery";
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useNetwork } from './../NetworkContext'
 
 interface ReferendumProps {
   index: string
@@ -65,8 +66,12 @@ interface ReferendumProps {
   voters: number
 }
 
+const denom = 'KSM'
+
 function ReferendumItem(props: { referendum: ReferendumProps }) {
-    const mobile = useMediaQuery('(min-width:600px)')
+  const { network, setNetwork } = useNetwork()
+
+  const mobile = useMediaQuery('(min-width:600px)')
   const getStatus = (status: string) => {
     switch (true) {
       case status === 'Ongoing':
@@ -131,7 +136,7 @@ function ReferendumItem(props: { referendum: ReferendumProps }) {
   }
 
   return (
-    <ListItem alignItems="flex-start" sx={{ px: {xs: 8, md: 8} }}>
+    <ListItem alignItems="flex-start" sx={{ px: { xs: 8, md: 8 } }}>
       <ListItemButton
         component="a"
         href={`/#/referenda/${props.referendum.index}`}
@@ -148,8 +153,8 @@ function ReferendumItem(props: { referendum: ReferendumProps }) {
               height: 54,
               border: '0.1px solid  rgba(230,0,122,0.6)',
               boxShadow: '0 3px 5px 2px rgba(230,0,122,0.25)',
-              mr: {xs: 0,md: 3},
-                display: {xs: 'none', md: 'flex'}
+              mr: { xs: 0, md: 3 },
+              display: { xs: 'none', md: 'flex' },
             }}
             variant="rounded"
             // src={g}
@@ -169,7 +174,13 @@ function ReferendumItem(props: { referendum: ReferendumProps }) {
                 alignItems={'center'}
                 alignContent={'center'}
               >
-                <Grid item container xs={12} md={10} justifyContent={'flex-start'}>
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  md={10}
+                  justifyContent={'flex-start'}
+                >
                   <Typography
                     variant="h5"
                     sx={{
@@ -187,7 +198,13 @@ function ReferendumItem(props: { referendum: ReferendumProps }) {
                       : 'No Title'}
                   </Typography>
                 </Grid>
-                <Grid item container xs={12} md={2} justifyContent={{xs: 'flex-start', md: 'flex-end'}}>
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  md={2}
+                  justifyContent={{ xs: 'flex-start', md: 'flex-end' }}
+                >
                   {getStatus(props.referendum.status)}
                 </Grid>
               </Grid>
@@ -225,7 +242,9 @@ function ReferendumItem(props: { referendum: ReferendumProps }) {
                       }
                       color="primary"
                     >
-                      {mobile ? props.referendum.submissionIdentity : props.referendum.submissionIdentity}
+                      {mobile
+                        ? props.referendum.submissionIdentity
+                        : props.referendum.submissionIdentity}
                     </Typography>
                   </Box>
                 </Grid>
@@ -242,7 +261,7 @@ function ReferendumItem(props: { referendum: ReferendumProps }) {
                     icon={<ThumbUpAltTwoToneIcon color="success" />}
                     label={`${props.referendum.ayes
                       .toLocaleString(undefined, { maximumFractionDigits: 2 })
-                      .toLocaleString()} KSM`}
+                      .toLocaleString()} ${network.symbol}`}
                   />
                   <Chip
                     sx={{
@@ -251,7 +270,7 @@ function ReferendumItem(props: { referendum: ReferendumProps }) {
                     icon={<ThumbDownAltTwoToneIcon color="primary" />}
                     label={`${props.referendum.nays
                       .toLocaleString(undefined, { maximumFractionDigits: 2 })
-                      .toLocaleString()} KSM`}
+                      .toLocaleString()} ${network.symbol}`}
                   />
                   <Chip
                     sx={{
@@ -271,7 +290,13 @@ function ReferendumItem(props: { referendum: ReferendumProps }) {
                   />
                 </Grid>
 
-                <Grid item container xs={12} md={6} justifyContent={{xs: 'flex-start', md: 'flex-end'}}>
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  md={6}
+                  justifyContent={{ xs: 'flex-start', md: 'flex-end' }}
+                >
                   <Chip
                     icon={<SchemaIcon color="primary" />}
                     label={`${props.referendum.track}: ${props.referendum.origin}`}
@@ -291,7 +316,7 @@ export default function ReferendumItemsList() {
   const [filterParam, setFilterParam] = useState('All')
   const [q, setQ] = useState('')
   const glitch = useGlitch()
-
+  const { network, setNetwork } = useNetwork()
   function search(referenda: any) {
     return referenda.filter((r: any) => {
       if (filterParam == 'All') {
@@ -300,15 +325,21 @@ export default function ReferendumItemsList() {
           r?.title?.toLowerCase().includes(q.toLowerCase()) ||
           r?.submissionIdentity.toLowerCase().includes(q.toLowerCase())
         )
-      }
-      if (filterParam == 'Finished') {
-        return (
-          (r?.status != 'Ongoing' && r.index.toString().includes(q)) ||
+      } else if (filterParam == 'Finished') {
+        console.log(r.status)
+        console.log(r.status != 'Ongoing')
+        const isFinished = r.status.toString() != 'Ongoing'
+        if (!isFinished) {
+          return false
+        }
+
+        const filter =
+          (isFinished && r.index.toString().includes(q)) ||
           r?.title?.toLowerCase().includes(q.toLowerCase()) ||
           r?.submissionIdentity.toLowerCase().includes(q.toLowerCase())
-        )
-      }
-      if (r?.status === filterParam) {
+        console.log(filter)
+        return filter
+      } else if (r?.status === filterParam) {
         return (
           r.index.toString().includes(q) ||
           r?.title?.toLowerCase().includes(q.toLowerCase()) ||
@@ -336,8 +367,9 @@ export default function ReferendumItemsList() {
   }
 
   useEffect(() => {
+    setReferenda([])
     const fetchReferenda = () => {
-      fetch(`${process.env.REACT_APP_API}/opengov/referenda`)
+      fetch(`${network.url}/opengov/referenda`)
         .then((results) => {
           return results.json()
         })
@@ -370,7 +402,7 @@ export default function ReferendumItemsList() {
         })
     }
     fetchReferenda()
-  }, [])
+  }, [network])
 
   return (
     <>
@@ -427,7 +459,7 @@ export default function ReferendumItemsList() {
                   <Typography
                     variant="h6"
                     sx={{
-                      px: {xs: 0.25, md: 2},
+                      px: { xs: 0.25, md: 2 },
                       backgroundImage: `linear-gradient(90deg, #E6007A, rgba(109,58,238,1))`,
                       backgroundSize: '100%',
                       backgroundRepeat: 'repeat',
@@ -451,10 +483,10 @@ export default function ReferendumItemsList() {
                 </Grid>
                 <Grid container item xs={12} md={2} justifyContent={'center'}>
                   <Typography
-                    variant={"h4"}
+                    variant={'h4'}
                     sx={{
                       // px: 10,
-                      py: {xs: 2, md: 0},
+                      py: { xs: 2, md: 0 },
                       backgroundImage: `linear-gradient(90deg, #E6007A, rgba(109,58,238,1))`,
                       backgroundSize: '100%',
                       backgroundRepeat: 'repeat',
@@ -467,7 +499,14 @@ export default function ReferendumItemsList() {
                     Referenda
                   </Typography>
                 </Grid>
-                <Grid item xs={12} md={5} sx={{pb: {xs: 2, md: 0}}} container justifyContent={{xs: 'center', md: 'flex-end'}}>
+                <Grid
+                  item
+                  xs={12}
+                  md={5}
+                  sx={{ pb: { xs: 2, md: 0 } }}
+                  container
+                  justifyContent={{ xs: 'center', md: 'flex-end' }}
+                >
                   <StyledToggleButtonGroup
                     value={filterParam}
                     exclusive
@@ -505,7 +544,7 @@ export default function ReferendumItemsList() {
             </ListSubheader>
             {search(referenda).map((referendum: any) => (
               <>
-                <Suspense fallback={<Loading />}>
+                <Suspense>
                   <ReferendumItem referendum={referendum} />
                 </Suspense>
 

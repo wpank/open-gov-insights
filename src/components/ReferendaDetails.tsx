@@ -223,14 +223,20 @@ export default function ReferendaDetails(props: { refInfo: ReferendumProps }) {
 
           <Grid item sx={{ width: '100%', pb: 2 }}>
             <Grid container direction="row">
-              <Grid container item xs={12} md={6} justifyContent={{xs: 'center', md: 'center'}}>
+              <Grid
+                container
+                item
+                xs={12}
+                md={6}
+                justifyContent={{ xs: 'center', md: 'center' }}
+              >
                 <Chip
                   sx={{
                     background:
                       'linear-gradient(90deg, rgba(72,204,129,0.1), rgba(81,229,145,0.3))',
                     border: '1px solid rgba(81,229,145,1)',
                     mr: 1,
-                      mt: {xs: 1, md: 0},
+                    mt: { xs: 1, md: 0 },
                   }}
                   icon={<ThumbUpAltTwoToneIcon color="success" />}
                   label={`${props.refInfo?.ayes.toLocaleString(undefined, {
@@ -240,7 +246,7 @@ export default function ReferendaDetails(props: { refInfo: ReferendumProps }) {
                 <Chip
                   sx={{
                     mr: 1,
-                      mt: {xs: 1, md: 0},
+                    mt: { xs: 1, md: 0 },
                   }}
                   icon={<ThumbDownAltTwoToneIcon color="primary" />}
                   label={`${props.refInfo?.nays.toLocaleString(undefined, {
@@ -258,7 +264,13 @@ export default function ReferendaDetails(props: { refInfo: ReferendumProps }) {
                   label={`${props.refInfo.voters} Voters`}
                 />
               </Grid>
-              <Grid item container xs={12} md={6}  justifyContent={{xs: 'center', md: 'center'}}>
+              <Grid
+                item
+                container
+                xs={12}
+                md={6}
+                justifyContent={{ xs: 'center', md: 'center' }}
+              >
                 {getStatus(props.refInfo?.currentStatus)}
                 <Chip
                   icon={<SchemaIcon color="primary" />}

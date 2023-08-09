@@ -11,34 +11,37 @@ import VoterItemsList from './components/VoterList'
 import VoterDetail from './components/VoterDetail'
 import DelegateListPage from './pages/DelegateListPage'
 import DelegateDetailsPage from './pages/DelegateDetailsPage'
+import { NetworkProvider } from './NetworkContext'
 
 function App() {
   return (
-    <div className="All">
-      <ThemeProvider theme={theme}>
-        <Nav />
-        <div className="App">
-          <Routes>
-            <Route>
-              <Route path="/" element={<OpenGovChart />} />
-              <Route path="/stats" element={<OpenGovChart />} />
-              <Route path="/referenda" element={<ReferendumItemsList />} />
-              <Route
-                path="/referenda/:referendumIndex"
-                element={<VoteList />}
-              />
-              <Route path="/voters" element={<VoterItemsList />} />
-              <Route path="/voter/:address" element={<VoterDetail />} />
-              <Route path="/delegates" element={<DelegateListPage />} />
-              <Route
-                path="/delegates/:address"
-                element={<DelegateDetailsPage />}
-              />
-            </Route>
-          </Routes>
-        </div>
-      </ThemeProvider>
-    </div>
+    <NetworkProvider>
+      <div className="All">
+        <ThemeProvider theme={theme}>
+          <Nav />
+          <div className="App">
+            <Routes>
+              <Route>
+                <Route path="/" element={<OpenGovChart />} />
+                <Route path="/stats" element={<OpenGovChart />} />
+                <Route path="/referenda" element={<ReferendumItemsList />} />
+                <Route
+                  path="/referenda/:referendumIndex"
+                  element={<VoteList />}
+                />
+                <Route path="/voters" element={<VoterItemsList />} />
+                <Route path="/voter/:address" element={<VoterDetail />} />
+                <Route path="/delegates" element={<DelegateListPage />} />
+                <Route
+                  path="/delegates/:address"
+                  element={<DelegateDetailsPage />}
+                />
+              </Route>
+            </Routes>
+          </div>
+        </ThemeProvider>
+      </div>
+    </NetworkProvider>
   )
 }
 

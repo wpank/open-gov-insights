@@ -43,6 +43,7 @@ import { ColorRing, Vortex } from 'react-loader-spinner'
 import Typography from '@mui/material/Typography'
 import SvgIcon from '@mui/material/SvgIcon'
 import Loading from './Loading'
+import { useNetwork } from '../NetworkContext'
 
 ChartJS.register(
   LinearScale,
@@ -126,7 +127,7 @@ export function OpenGovChart({}: {}): JSX.Element {
 
   const [toggle, setToggle] = useState('all')
   const [countToggle, setCountToggle] = useState('amount')
-
+  const { network, setNetwork } = useNetwork()
   const glitch = useGlitch()
 
   const handleCountChange = (
@@ -356,13 +357,13 @@ export function OpenGovChart({}: {}): JSX.Element {
         break
     }
     setChartData(data)
-  }, [toggle, countToggle])
+  }, [toggle, countToggle, network])
 
   // @ts-ignore
   useEffect(() => {
     const fetchVotes = () => {
       console.log(`fetching stats...`)
-      fetch(`${process.env.REACT_APP_API}/opengov/referenda/stats/`)
+      fetch(`${network.url}/opengov/referenda/stats/`)
         .then((results) => {
           return results.json()
         })
@@ -396,7 +397,7 @@ export function OpenGovChart({}: {}): JSX.Element {
     }
 
     fetchVotes()
-  }, [])
+  }, [network])
 
   return (
     <>

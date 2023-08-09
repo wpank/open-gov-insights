@@ -55,7 +55,9 @@ import Diversity3Icon from '@mui/icons-material/Diversity3'
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement'
 import { ReactComponent as Subscan } from '../../icons/subscan.svg'
 import { ReactComponent as Logo } from '../../icons/logo.svg'
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { ReactComponent as PolkadotLogo } from '../../icons/polkadot-logo.svg'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useNetwork } from '../../NetworkContext'
 
 interface DelegateListItemProps {
   abstainCount: number
@@ -94,12 +96,12 @@ export const getDelegateAvatar = (delegate: any) => {
           sx={{
             background:
               'linear-gradient(180deg, rgba(72,204,129,0.2),rgba(81,229,145,0.2))',
-            width: {xs: 32, md: 78},
-            height: {xs: 32, md: 78},
+            width: { xs: 32, md: 78 },
+            height: { xs: 32, md: 78 },
             border: '0.1px solid  rgba(86,243,154,1)',
             boxShadow: '0 3px 5px 2px rgba(86,243,154,0.25)',
             mr: 2,
-              ml: {xs: 0, md: 8}
+            ml: { xs: 0, md: 8 },
           }}
         />
         // </Tooltip>
@@ -111,12 +113,12 @@ export const getDelegateAvatar = (delegate: any) => {
           sx={{
             background:
               'linear-gradient(180deg, rgba(230,0,122,0.06),rgba(230,0,122,0.2))',
-            width: {xs: 32, md: 78},
-            height: {xs: 32, md: 78},
+            width: { xs: 32, md: 78 },
+            height: { xs: 32, md: 78 },
             border: '0.1px solid  rgba(230,0,122,0.6)',
             boxShadow: '0 3px 5px 2px rgba(230,0,122,0.3)',
             mr: 2,
-              ml: {xs: 0, md: 8}
+            ml: { xs: 0, md: 8 },
           }}
         >
           <Identicon theme={'polkadot'} size={60} value={delegate.address} />
@@ -130,13 +132,11 @@ const getLabelChip = (label: string) => {
   switch (true) {
     case label == 'Validator':
       return (
-        // <Tooltip title={`Voted ${voteDirection}`}>
         <Chip
           sx={{ mx: 1 }}
           icon={<SensorOccupiedIcon color="success" />}
           label={label}
         />
-        // </Tooltip>
       )
     case label === 'Nominator':
       return (
@@ -174,14 +174,14 @@ const getLabelChip = (label: string) => {
 export default function DelegateListItem(props: {
   delegate: DelegateListItemProps
 }) {
-
-    const mobile = useMediaQuery('(min-width:600px)')
+  const { network, setNetwork } = useNetwork()
+  const mobile = useMediaQuery('(min-width:600px)')
   return (
     <ListItem
       alignItems="flex-start"
       sx={{
-        px: {xs: 0, md: 8},
-          pl: {xs: 1, md: 0},
+        px: { xs: 0, md: 8 },
+        pl: { xs: 1, md: 0 },
         py: 2,
       }}
     >
@@ -203,7 +203,7 @@ export default function DelegateListItem(props: {
                 container
                 xs={12}
                 md={4}
-                justifyContent={{xs: 'center', md: 'flex-start'}}
+                justifyContent={{ xs: 'center', md: 'flex-start' }}
                 alignItems={'center'}
               >
                 <Link
@@ -231,11 +231,14 @@ export default function DelegateListItem(props: {
                       },
                     }}
                   >
-                    {mobile ? (props.delegate?.name
+                    {mobile
                       ? props.delegate?.name
-                      : props.delegate?.identity) : (props.delegate?.name
                         ? props.delegate?.name
-                        : props.delegate?.identity).slice(0,16)}
+                        : props.delegate?.identity
+                      : (props.delegate?.name
+                          ? props.delegate?.name
+                          : props.delegate?.identity
+                        ).slice(0, 16)}
                   </Typography>
                 </Link>
               </Grid>
@@ -245,7 +248,7 @@ export default function DelegateListItem(props: {
                 xs={8}
                 md={4}
                 justifyItems={'center'}
-                justifyContent={{xs: 'center', md: 'flex-start'}}
+                justifyContent={{ xs: 'center', md: 'flex-start' }}
                 alignItems={'center'}
                 alignContent={'center'}
               >
@@ -268,7 +271,7 @@ export default function DelegateListItem(props: {
                 container
                 xs={12}
                 md={4}
-                justifyContent={{xs: 'center', md: 'flex-end'}}
+                justifyContent={{ xs: 'center', md: 'flex-end' }}
                 alignItems={'center'}
                 alignContent={'center'}
               >
@@ -292,7 +295,7 @@ export default function DelegateListItem(props: {
                 md={8}
                 alignItems={'center'}
                 sx={{ mt: 2 }}
-                justifyContent={{xs: 'center', md: 'flex-start'}}
+                justifyContent={{ xs: 'center', md: 'flex-start' }}
               >
                 <Identicon
                   theme={'polkadot'}
@@ -311,7 +314,9 @@ export default function DelegateListItem(props: {
                     WebkitTextFillColor: 'transparent',
                   }}
                 >
-                  {mobile ? props.delegate.address : props.delegate.address.slice(0,5)}
+                  {mobile
+                    ? props.delegate.address
+                    : props.delegate.address.slice(0, 5)}
                 </Typography>
                 <IconButton
                   href={`https://www.subscan.io/account/${props.delegate.address}`}
@@ -322,7 +327,13 @@ export default function DelegateListItem(props: {
                 </IconButton>
               </Grid>
 
-              <Grid item container xs={12} md={4} justifyContent={{xs: 'center', md: 'flex-end'}}>
+              <Grid
+                item
+                container
+                xs={12}
+                md={4}
+                justifyContent={{ xs: 'center', md: 'flex-end' }}
+              >
                 <Chip
                   sx={{
                     background:
@@ -332,13 +343,13 @@ export default function DelegateListItem(props: {
                   }}
                   icon={
                     <SvgIcon color="primary">
-                      <Logo />
+                      {network.name == 'Polkadot' ? <PolkadotLogo /> : <Logo />}
                     </SvgIcon>
                   }
                   label={`Voting Balance: ${props.delegate.votingBalance.toLocaleString(
                     undefined,
                     { maximumFractionDigits: 2 }
-                  )} KSM`}
+                  )} ${network.symbol}`}
                 />
               </Grid>
             </Grid>
@@ -354,13 +365,25 @@ export default function DelegateListItem(props: {
                 mb: 2,
               }}
             >
-              <Grid container item xs={12} md={3}  justifyContent={{xs: 'center', md: 'flex-start'}}>
+              <Grid
+                container
+                item
+                xs={12}
+                md={3}
+                justifyContent={{ xs: 'center', md: 'flex-start' }}
+              >
                 <Chip
                   icon={<AutoAwesomeIcon color="success" />}
                   label={`${props.delegate.voteCount} Votes`}
                 />
               </Grid>
-              <Grid item container xs={12} md={6}  justifyContent={{xs: 'center', md: 'flex-end'}}>
+              <Grid
+                item
+                container
+                xs={12}
+                md={6}
+                justifyContent={{ xs: 'center', md: 'flex-end' }}
+              >
                 <Chip
                   sx={{
                     background:
@@ -399,7 +422,13 @@ export default function DelegateListItem(props: {
                 )}
               </Grid>
 
-              <Grid item container xs={12} md={3}  justifyContent={{xs: 'center', md: 'flex-end'}}>
+              <Grid
+                item
+                container
+                xs={12}
+                md={3}
+                justifyContent={{ xs: 'center', md: 'flex-end' }}
+              >
                 {props.delegate.castedCount > 0 && (
                   <Chip
                     sx={{
@@ -442,17 +471,27 @@ export default function DelegateListItem(props: {
                   <Chip
                     icon={
                       <SvgIcon color="primary">
-                        <Logo />
+                        {network.name == 'Polkadot' ? (
+                          <PolkadotLogo />
+                        ) : (
+                          <Logo />
+                        )}
                       </SvgIcon>
                     }
                     label={`${props.delegate.delegationAmount.toLocaleString(
                       undefined,
                       { maximumFractionDigits: 2 }
-                    )} KSM Delegated`}
+                    )} ${network.symbol} Delegated`}
                   />
                 )}
               </Grid>
-              <Grid item container xs={12} md={6}  justifyContent={{xs: 'center', md: 'flex-end'}}>
+              <Grid
+                item
+                container
+                xs={12}
+                md={6}
+                justifyContent={{ xs: 'center', md: 'flex-end' }}
+              >
                 <Chip
                   sx={{
                     background:

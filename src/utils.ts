@@ -1,1 +1,1 @@
-export const formatAddress = (isMobile: boolean, address: string)=> {}
+export const formatAddress = (isMobile: boolean, address: string) => {}

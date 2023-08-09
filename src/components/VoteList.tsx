@@ -30,6 +30,7 @@ import { Paper } from '@mui/material'
 import { Suspense, useEffect, useState } from 'react'
 import SvgIcon from '@mui/material/SvgIcon'
 import { ReactComponent as Logo } from '../icons/logo.svg'
+import { ReactComponent as PolkadotLogo } from '../icons/polkadot-logo.svg'
 import { useParams } from 'react-router-dom'
 import { Remark } from 'react-remark'
 import HowToVoteIcon from '@mui/icons-material/HowToVote'
@@ -58,6 +59,7 @@ import SelfImprovementIcon from '@mui/icons-material/SelfImprovement'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { debounce } from 'lodash'
 import HelpIcon from '@mui/icons-material/Help'
+import { useNetwork } from '../NetworkContext'
 
 interface VoteItemProps {
   address: string
@@ -92,8 +94,9 @@ const getConvictionBalance = (conviction: string, amount: number) => {
 }
 
 function VoteItem(props: { vote: VoteItemProps }) {
+  const { network, setNetwork } = useNetwork()
 
-const mobile = useMediaQuery('(min-width:600px)')
+  const mobile = useMediaQuery('(min-width:600px)')
   const getVoteAvatar = (voteDirection: string) => {
     switch (true) {
       case voteDirection === 'Aye':
@@ -103,11 +106,11 @@ const mobile = useMediaQuery('(min-width:600px)')
               sx={{
                 background:
                   'linear-gradient(180deg, rgba(72,204,129,0.2),rgba(81,229,145,0.2))',
-                width: {xs: 24, md: 48},
-                height: {xs: 24, md: 48},
+                width: { xs: 24, md: 48 },
+                height: { xs: 24, md: 48 },
                 border: '0.1px solid  rgba(86,243,154,1)',
                 boxShadow: '0 3px 5px 2px rgba(86,243,154,0.25)',
-                mr: {xs: 0, md: 2},
+                mr: { xs: 0, md: 2 },
               }}
               variant="rounded"
             >
@@ -122,11 +125,11 @@ const mobile = useMediaQuery('(min-width:600px)')
               sx={{
                 background:
                   'linear-gradient(180deg, rgba(230,0,122,0.06),rgba(230,0,122,0.2))',
-                  width: {xs: 24, md: 48},
-                  height: {xs: 24, md: 48},
+                width: { xs: 24, md: 48 },
+                height: { xs: 24, md: 48 },
                 border: '0.1px solid  rgba(230,0,122,0.6)',
                 boxShadow: '0 3px 5px 2px rgba(230,0,122,0.25)',
-                  mr: {xs: 0, md: 2},
+                mr: { xs: 0, md: 2 },
               }}
               variant="rounded"
             >
@@ -142,10 +145,10 @@ const mobile = useMediaQuery('(min-width:600px)')
                 background:
                   'linear-gradient(90deg, rgba(169,204,41,0.1), rgba(190,229,46,0.1))',
                 border: '1px solid rgba(211,255,51,1)',
-                  width: {xs: 24, md: 48},
-                  height: {xs: 24, md: 48},
+                width: { xs: 24, md: 48 },
+                height: { xs: 24, md: 48 },
                 boxShadow: '0 3px 5px 2px rgba(211,255,51,0.25)',
-                  mr: {xs: 0, md: 2},
+                mr: { xs: 0, md: 2 },
               }}
               variant="rounded"
             >
@@ -157,8 +160,13 @@ const mobile = useMediaQuery('(min-width:600px)')
   }
 
   return (
-    <ListItem alignItems="flex-start" sx={{
-        px: {xs: 0, md: 8}, py: 2 }}>
+    <ListItem
+      alignItems="flex-start"
+      sx={{
+        px: { xs: 0, md: 8 },
+        py: 2,
+      }}
+    >
       <ListItemAvatar>{getVoteAvatar(props.vote.voteDirection)}</ListItemAvatar>
       <ListItemText
         primary={
@@ -198,7 +206,9 @@ const mobile = useMediaQuery('(min-width:600px)')
                       },
                     }}
                   >
-                    {mobile ? props.vote.identity : props.vote.identity.slice(0,8)}
+                    {mobile
+                      ? props.vote.identity
+                      : props.vote.identity.slice(0, 8)}
                   </Typography>
                 </Link>
                 <IconButton
@@ -237,7 +247,7 @@ const mobile = useMediaQuery('(min-width:600px)')
                 <Chip
                   icon={
                     <SvgIcon color="primary">
-                      <Logo />
+                      {network.name == 'Polkadot' ? <PolkadotLogo /> : <Logo />}
                     </SvgIcon>
                   }
                   label={
@@ -245,7 +255,7 @@ const mobile = useMediaQuery('(min-width:600px)')
                       {props.vote.voteAmount.toLocaleString(undefined, {
                         maximumFractionDigits: 2,
                       })}{' '}
-                      KSM
+                      {network.symbol}
                     </>
                   }
                 />
@@ -263,7 +273,14 @@ const mobile = useMediaQuery('(min-width:600px)')
                 />
               </Grid>
 
-              <Grid item xs={12} md={8} container justifyContent={{xs: 'flex-start', md: 'flex-end'}} sx={{pt: {xs: 1, md: 0}}}>
+              <Grid
+                item
+                xs={12}
+                md={8}
+                container
+                justifyContent={{ xs: 'flex-start', md: 'flex-end' }}
+                sx={{ pt: { xs: 1, md: 0 } }}
+              >
                 <Chip
                   sx={{
                     boxShadow: '0 3px 5px 2px rgba(230,0,122,0.15)',
@@ -306,7 +323,9 @@ const mobile = useMediaQuery('(min-width:600px)')
                               variant="subtitle2"
                               color="primary"
                             >
-                              {mobile ? props.vote.delegatingToIdentity : props.vote.delegatingToIdentity.slice(0,8)}
+                              {mobile
+                                ? props.vote.delegatingToIdentity
+                                : props.vote.delegatingToIdentity.slice(0, 8)}
                             </Typography>
                           </Link>
                           <IconButton
@@ -336,7 +355,11 @@ const mobile = useMediaQuery('(min-width:600px)')
                     href={`/#/delegates/${props.vote.address}`}
                     icon={
                       <SvgIcon color="primary">
-                        <Logo />
+                        {network.name == 'Polkadot' ? (
+                          <PolkadotLogo />
+                        ) : (
+                          <Logo />
+                        )}
                       </SvgIcon>
                     }
                     label={
@@ -344,7 +367,7 @@ const mobile = useMediaQuery('(min-width:600px)')
                         {props.vote.delegatedBalance.toLocaleString(undefined, {
                           maximumFractionDigits: 2,
                         })}{' '}
-                        KSM Delegated
+                        {network.symbol} Delegated
                       </>
                     }
                   />
@@ -359,6 +382,7 @@ const mobile = useMediaQuery('(min-width:600px)')
 }
 
 export default function VoteItemsList() {
+  const { network, setNetwork } = useNetwork()
   const [refInfo, setRefInfo] = useState<any>()
   const [votes, setVotes] = useState([])
   const { referendumIndex } = useParams()
@@ -406,9 +430,7 @@ export default function VoteItemsList() {
 
   useEffect(() => {
     const fetchVotes = () => {
-      fetch(
-        `${process.env.REACT_APP_API}/opengov/votes/referendum/${referendumIndex}`
-      )
+      fetch(`${network.url}/opengov/votes/referendum/${referendumIndex}`)
         .then((results) => {
           return results.json()
         })
@@ -440,7 +462,7 @@ export default function VoteItemsList() {
     }
 
     const fetchRefInfo = () => {
-      fetch(`${process.env.REACT_APP_API}/opengov/referenda/${referendumIndex}`)
+      fetch(`${network.url}/opengov/referenda/${referendumIndex}`)
         .then((results) => {
           return results.json()
         })
@@ -552,7 +574,7 @@ export default function VoteItemsList() {
                         onChange={handleInputChange}
                       />
                       <Tooltip
-                        title={'The total amount of KSM, including conviction'}
+                        title={`The total amount of ${network.symbol}, including conviction`}
                       >
                         <Box display="flex">
                           <Typography
@@ -582,7 +604,7 @@ export default function VoteItemsList() {
                               .toLocaleString(undefined, {
                                 maximumFractionDigits: 2,
                               })}{' '}
-                            KSM
+                            {network.symbol}
                           </Typography>
                           <HelpIcon sx={{ color: 'rgba(109,58,238,1)' }} />
                         </Box>

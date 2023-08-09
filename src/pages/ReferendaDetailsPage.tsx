@@ -35,18 +35,18 @@ import { ColorRing } from 'react-loader-spinner'
 import { useGlitch } from 'react-powerglitch'
 import { ReactComponent as LoadingLogo } from './logo.svg'
 import Loading from '../components/Loading'
+import { useNetwork } from './../NetworkContext'
 
 export default function ReferendaDetailsPage() {
   const [refInfo, setRefInfo] = useState<any>()
   const [votes, setVotes] = useState([])
   const { referendumIndex } = useParams()
   const glitch = useGlitch()
+  const { network, setNetwork } = useNetwork()
 
   useEffect(() => {
     const fetchVotes = () => {
-      fetch(
-        `https://kusama.w3f.community/opengov/votes/referendum/${referendumIndex}`
-      )
+      fetch(`${network.url}/opengov/votes/referendum/${referendumIndex}`)
         .then((results) => {
           return results.json()
         })
@@ -76,7 +76,7 @@ export default function ReferendaDetailsPage() {
     }
 
     const fetchRefInfo = () => {
-      fetch(`https://kusama.w3f.community/opengov/referenda/${referendumIndex}`)
+      fetch(`${network.url}/opengov/referenda/${referendumIndex}`)
         .then((results) => {
           return results.json()
         })
@@ -90,7 +90,7 @@ export default function ReferendaDetailsPage() {
     }
     fetchRefInfo()
     fetchVotes()
-  }, [])
+  }, [network])
 
   return <></>
 }

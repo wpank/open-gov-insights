@@ -9,9 +9,12 @@ import Grid from '@mui/material/Grid'
 import { ColorRing } from 'react-loader-spinner'
 import * as React from 'react'
 import { ReactComponent as LoadingLogo } from '../icons/logo.svg'
+import { ReactComponent as PolkadotLoadingLogo } from '../icons/polkadot-logo.svg'
+import { useNetwork } from '../NetworkContext'
 
 export default function Loading() {
   const glitch = useGlitch()
+  const { network, setNetwork } = useNetwork()
 
   return (
     <>
@@ -21,7 +24,11 @@ export default function Loading() {
             <div>
               <span ref={glitch.ref}>
                 <SvgIcon color="primary" style={{ fontSize: 240 }}>
-                  <LoadingLogo />
+                  {network.name == 'Polkadot' ? (
+                    <PolkadotLoadingLogo />
+                  ) : (
+                    <LoadingLogo />
+                  )}
                 </SvgIcon>
               </span>
             </div>

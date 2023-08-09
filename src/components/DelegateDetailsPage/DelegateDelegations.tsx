@@ -11,6 +11,7 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import ThumbDownAltTwoToneIcon from '@mui/icons-material/ThumbDownAltTwoTone'
 import SvgIcon from '@mui/material/SvgIcon'
 import { ReactComponent as Logo } from '../../icons/logo.svg'
+import { ReactComponent as PolkadotLogo } from '../../icons/polkadot-logo.svg'
 import { Remark } from 'react-remark'
 import IconButton from '@mui/material/IconButton'
 import { ReactComponent as Subscan } from '../../icons/subscan.svg'
@@ -37,6 +38,7 @@ import LockClockIcon from '@mui/icons-material/LockClock'
 import ListItem from '@mui/material/ListItem'
 import HelpIcon from '@mui/icons-material/Help'
 import Tooltip from '@mui/material/Tooltip'
+import { useNetwork } from '../../NetworkContext'
 
 interface TrackDelegationProps {
   delegate: string
@@ -216,7 +218,7 @@ export default function DelegateDelegations(props: {
   delegation: TrackDelegationProps
 }) {
   const mobile = useMediaQuery('(min-width:600px)')
-
+  const { network, setNetwork } = useNetwork()
   const [q, setQ] = useState('')
   const [filterParam, setFilterParam] = useState('All')
 
@@ -266,7 +268,7 @@ export default function DelegateDelegations(props: {
           lg: '95vw',
           xl: '75vw',
         },
-        maxHeight: {xs: '80vh', md: '40vh'},
+        maxHeight: { xs: '80vh', md: '40vh' },
         my: 4,
         boxShadow: '0 3px 5px 1px rgba(230,0,122, 0.5)',
         backdropFilter: 'blur(20px)',
@@ -465,7 +467,7 @@ export default function DelegateDelegations(props: {
                       onChange={handleInputChange}
                     />
                     <Tooltip
-                      title={'The total amount of KSM, including conviction'}
+                      title={`The total amount of ${network.symbol}, including conviction`}
                     >
                       <Box display="flex" alignItems={'center'}>
                         <Typography
@@ -488,7 +490,7 @@ export default function DelegateDelegations(props: {
                             .toLocaleString(undefined, {
                               maximumFractionDigits: 2,
                             })}{' '}
-                          KSM
+                          {network.symbol}
                         </Typography>
                         <HelpIcon sx={{ color: 'rgba(109,58,238,1)' }} />
                       </Box>
@@ -531,52 +533,52 @@ export default function DelegateDelegations(props: {
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={4}>
-                  {/*  <StyledToggleButtonGroup*/}
-                  {/*    value={filterParam}*/}
-                  {/*    exclusive*/}
-                  {/*    onChange={handleChange}*/}
-                  {/*    aria-label="FilterParam"*/}
-                  {/*    size="small"*/}
-                  {/*    // orientation={`${mobile ? `horizontal` : `vertical`}`}*/}
-                  {/*      sx={{display: {xs: 'none', md: 'flex'}}}*/}
-                  {/*  >*/}
-                  {/*    <StyledToggleButton value="All">*/}
-                  {/*      <AllInclusiveIcon*/}
-                  {/*        color="info"*/}
-                  {/*        sx={{ pr: 0.5 }}*/}
-                  {/*        fontSize="medium"*/}
-                  {/*      />*/}
-                  {/*      All*/}
-                  {/*    </StyledToggleButton>*/}
-                  {/*    <StyledToggleButton value="Aye">*/}
-                  {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
-                  {/*      None*/}
-                  {/*    </StyledToggleButton>*/}
-                  {/*    <StyledToggleButton value="Nay">*/}
-                  {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
-                  {/*      1x*/}
-                  {/*    </StyledToggleButton>*/}
-                  {/*    <StyledToggleButton value="Abstain">*/}
-                  {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
-                  {/*      2x*/}
-                  {/*    </StyledToggleButton>*/}
-                  {/*    <StyledToggleButton value="Abstain">*/}
-                  {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
-                  {/*      3x*/}
-                  {/*    </StyledToggleButton>*/}
-                  {/*    <StyledToggleButton value="Abstain">*/}
-                  {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
-                  {/*      4x*/}
-                  {/*    </StyledToggleButton>*/}
-                  {/*    <StyledToggleButton value="Abstain">*/}
-                  {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
-                  {/*      5x*/}
-                  {/*    </StyledToggleButton>*/}
-                  {/*    <StyledToggleButton value="Abstain">*/}
-                  {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
-                  {/*      6x*/}
-                  {/*    </StyledToggleButton>*/}
-                  {/*  </StyledToggleButtonGroup>*/}
+                    {/*  <StyledToggleButtonGroup*/}
+                    {/*    value={filterParam}*/}
+                    {/*    exclusive*/}
+                    {/*    onChange={handleChange}*/}
+                    {/*    aria-label="FilterParam"*/}
+                    {/*    size="small"*/}
+                    {/*    // orientation={`${mobile ? `horizontal` : `vertical`}`}*/}
+                    {/*      sx={{display: {xs: 'none', md: 'flex'}}}*/}
+                    {/*  >*/}
+                    {/*    <StyledToggleButton value="All">*/}
+                    {/*      <AllInclusiveIcon*/}
+                    {/*        color="info"*/}
+                    {/*        sx={{ pr: 0.5 }}*/}
+                    {/*        fontSize="medium"*/}
+                    {/*      />*/}
+                    {/*      All*/}
+                    {/*    </StyledToggleButton>*/}
+                    {/*    <StyledToggleButton value="Aye">*/}
+                    {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
+                    {/*      None*/}
+                    {/*    </StyledToggleButton>*/}
+                    {/*    <StyledToggleButton value="Nay">*/}
+                    {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
+                    {/*      1x*/}
+                    {/*    </StyledToggleButton>*/}
+                    {/*    <StyledToggleButton value="Abstain">*/}
+                    {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
+                    {/*      2x*/}
+                    {/*    </StyledToggleButton>*/}
+                    {/*    <StyledToggleButton value="Abstain">*/}
+                    {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
+                    {/*      3x*/}
+                    {/*    </StyledToggleButton>*/}
+                    {/*    <StyledToggleButton value="Abstain">*/}
+                    {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
+                    {/*      4x*/}
+                    {/*    </StyledToggleButton>*/}
+                    {/*    <StyledToggleButton value="Abstain">*/}
+                    {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
+                    {/*      5x*/}
+                    {/*    </StyledToggleButton>*/}
+                    {/*    <StyledToggleButton value="Abstain">*/}
+                    {/*      <LockClockIcon color="info" sx={{ pr: 1 }} />*/}
+                    {/*      6x*/}
+                    {/*    </StyledToggleButton>*/}
+                    {/*  </StyledToggleButtonGroup>*/}
                   </Grid>
                 </Grid>
               </Box>
@@ -585,7 +587,10 @@ export default function DelegateDelegations(props: {
 
             {props.delegation?.delegators?.map((delegation: any) => (
               <>
-                <ListItem alignItems="flex-start" sx={{ px: {xs: 0, md: 8}, py: 2 }}>
+                <ListItem
+                  alignItems="flex-start"
+                  sx={{ px: { xs: 0, md: 8 }, py: 2 }}
+                >
                   <ListItemAvatar>
                     <Identicon
                       theme={'polkadot'}
@@ -632,7 +637,9 @@ export default function DelegateDelegations(props: {
                                   },
                                 }}
                               >
-                                {mobile ? delegation.identity : delegation.identity.slice(0,10)}
+                                {mobile
+                                  ? delegation.identity
+                                  : delegation.identity.slice(0, 10)}
                               </Typography>
                             </Link>
                             <IconButton
@@ -709,7 +716,7 @@ export default function DelegateDelegations(props: {
                           container
                           spacing={1}
                           direction="row"
-                          justifyContent={{xs: 'center', md: 'flex-start'}}
+                          justifyContent={{ xs: 'center', md: 'flex-start' }}
                           justifyItems={'center'}
                           alignItems={'center'}
                         >
@@ -717,7 +724,11 @@ export default function DelegateDelegations(props: {
                             <Chip
                               icon={
                                 <SvgIcon color="primary">
-                                  <Logo />
+                                  {network.name == 'Polkadot' ? (
+                                    <PolkadotLogo />
+                                  ) : (
+                                    <Logo />
+                                  )}
                                 </SvgIcon>
                               }
                               label={`Voting Balance: ${delegation.balance.toLocaleString(
@@ -725,14 +736,18 @@ export default function DelegateDelegations(props: {
                                 {
                                   maximumFractionDigits: 2,
                                 }
-                              )} KSM`}
+                              )} ${network.symbol}`}
                             />
                           </Grid>
                           <Grid item xs={12} md={3}>
                             <Chip
                               icon={
                                 <SvgIcon color="primary">
-                                  <Logo />
+                                  {network.name == 'Polkadot' ? (
+                                    <PolkadotLogo />
+                                  ) : (
+                                    <Logo />
+                                  )}
                                 </SvgIcon>
                               }
                               label={`Effective Balance: ${delegation.effectiveBalance.toLocaleString(
@@ -740,7 +755,7 @@ export default function DelegateDelegations(props: {
                                 {
                                   maximumFractionDigits: 2,
                                 }
-                              )} KSM`}
+                              )} ${network.symbol}`}
                             />
                           </Grid>
                           <Grid item container xs={12} md={2}>

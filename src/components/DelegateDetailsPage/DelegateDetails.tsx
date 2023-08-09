@@ -25,7 +25,7 @@ import SelfImprovementIcon from '@mui/icons-material/SelfImprovement'
 import ApartmentIcon from '@mui/icons-material/Apartment'
 import { Person } from '@mui/icons-material'
 import Tooltip from '@mui/material/Tooltip'
-import useMediaQuery from "@mui/material/useMediaQuery";
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 interface DelegateDetailsProps {
   index: string
@@ -113,43 +113,35 @@ export const getLabelChip = (label: string) => {
   switch (true) {
     case label == 'Validator':
       return (
-        // <Tooltip title={`Voted ${voteDirection}`}>
         <Chip
           sx={{ mx: 1 }}
           icon={<SensorOccupiedIcon color="success" />}
           label={label}
         />
-        // </Tooltip>
       )
     case label === 'Nominator':
       return (
-        // <Tooltip title={`Voted ${voteDirection}`}>
         <Chip
           sx={{ mx: 1 }}
           icon={<RecordVoiceOverIcon color="success" />}
           label={label}
         />
-        // </Tooltip>
       )
     case label === 'Society':
       return (
-        // <Tooltip title={`Voted ${voteDirection}`}>
         <Chip
           sx={{ mx: 1 }}
           icon={<Diversity3Icon color="success" />}
           label={label}
         />
-        // </Tooltip>
       )
     case label === 'Fellowship':
       return (
-        // <Tooltip title={`Voted ${voteDirection}`}>
         <Chip
           sx={{ mx: 1 }}
           icon={<SelfImprovementIcon color="success" />}
           label={label}
         />
-        // </Tooltip>
       )
   }
 }
@@ -158,23 +150,19 @@ const getOrganizationChip = (isOrganization: boolean) => {
   switch (true) {
     case isOrganization == true:
       return (
-        // <Tooltip title={`Voted ${voteDirection}`}>
         <Chip
           sx={{ mx: 1 }}
           icon={<ApartmentIcon color="info" />}
           label={'Organization'}
         />
-        // </Tooltip>
       )
     case isOrganization === false || !isOrganization:
       return (
-        // <Tooltip title={`Voted ${voteDirection}`}>
         <Chip
           sx={{ mx: 1 }}
           icon={<Person color="info" />}
           label={'Individual'}
         />
-        // </Tooltip>
       )
   }
 }
@@ -183,7 +171,6 @@ const getDelegateDetailsAvatar = (delegate: any) => {
   switch (true) {
     case !!delegate.image:
       return (
-        // <Tooltip title={`Voted ${voteDirection}`}>
         <Avatar
           src={delegate.image}
           sx={{
@@ -196,11 +183,9 @@ const getDelegateDetailsAvatar = (delegate: any) => {
             mr: 2,
           }}
         />
-        // </Tooltip>
       )
     case !!delegate.address:
       return (
-        // <Tooltip title={`Voted ${voteDirection}`}>
         <Avatar
           sx={{
             background:
@@ -214,13 +199,12 @@ const getDelegateDetailsAvatar = (delegate: any) => {
         >
           <Identicon theme={'polkadot'} size={60} value={delegate.address} />
         </Avatar>
-        // </Tooltip>
       )
   }
 }
 
 export default function DelegateDetails(props: { delegateDetails: any }) {
-    const mobile = useMediaQuery('(min-width:600px)')
+  const mobile = useMediaQuery('(min-width:600px)')
   return (
     <Paper
       sx={{
@@ -252,14 +236,15 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
             container
             direction={'row'}
             alignItems={'center'}
-            sx={{ px:{xs: 0, md:  18}, pt: 4 }}
+            sx={{ px: { xs: 0, md: 18 }, pt: 4 }}
           >
             <Grid
               item
               container
               alignItems={'center'}
               justifyContent={'flex-start'}
-              xs={12} md={8}
+              xs={12}
+              md={8}
             >
               {getDelegateDetailsAvatar(props.delegateDetails)}
               <Typography
@@ -280,7 +265,13 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
                   : props.delegateDetails?.address}
               </Typography>
             </Grid>
-            <Grid item container xs={12} md={4} justifyContent={{xs: 'center', md: 'flex-end'}}>
+            <Grid
+              item
+              container
+              xs={12}
+              md={4}
+              justifyContent={{ xs: 'center', md: 'flex-end' }}
+            >
               {props.delegateDetails?.labels?.map((label: string) =>
                 getLabelChip(label)
               )}
@@ -293,14 +284,15 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
             direction={'row'}
             alignItems={'center'}
             alignContent={'center'}
-            sx={{ px: {xs: 0, md: 18}, py: 2 }}
+            sx={{ px: { xs: 0, md: 18 }, py: 2 }}
           >
             <Grid
               container
               alignItems={'center'}
               alignContent={'center'}
-              justifyContent={{xs: 'center', md: 'flex-start'}}
-              xs={12} md={6}
+              justifyContent={{ xs: 'center', md: 'flex-start' }}
+              xs={12}
+              md={6}
             >
               <Typography variant="subtitle1" color={'primary'}>
                 {props.delegateDetails?.shortDescription
@@ -308,10 +300,22 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
                   : ''}
               </Typography>
             </Grid>
-            <Grid container item xs={12} md={3} justifyContent={{xs: 'center', md: 'flex-end'}}>
+            <Grid
+              container
+              item
+              xs={12}
+              md={3}
+              justifyContent={{ xs: 'center', md: 'flex-end' }}
+            >
               {getScore(props.delegateDetails?.score?.normalizedScore)}
             </Grid>
-                <Grid container item xs={12} md={3} justifyContent={{xs: 'center', md: 'flex-end'}}>
+            <Grid
+              container
+              item
+              xs={12}
+              md={3}
+              justifyContent={{ xs: 'center', md: 'flex-end' }}
+            >
               <Chip
                 sx={{
                   background:
@@ -331,7 +335,7 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
           </Grid>
 
           <Grid
-            sx={{ px: {xs: 0, md: 18} }}
+            sx={{ px: { xs: 0, md: 18 } }}
             container
             direction="column"
             justifyContent={'space-between'}
@@ -347,10 +351,11 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
               <Grid
                 item
                 container
-                xs={12} md={8}
+                xs={12}
+                md={8}
                 alignItems={'center'}
                 alignContent={'center'}
-                justifyContent={{xs: 'center', md: 'flex-start'}}
+                justifyContent={{ xs: 'center', md: 'flex-start' }}
               >
                 <Identicon
                   theme={'polkadot'}
@@ -365,7 +370,9 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
                   }}
                   color="primary"
                 >
-                    {mobile ? props.delegateDetails?.address : props.delegateDetails?.address?.slice(0,8)}
+                  {mobile
+                    ? props.delegateDetails?.address
+                    : props.delegateDetails?.address?.slice(0, 8)}
                 </Typography>
                 <IconButton
                   href={`https://www.subscan.io/account/${props.delegateDetails?.address}`}
@@ -377,7 +384,13 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
                   </SvgIcon>
                 </IconButton>
               </Grid>
-              <Grid item container xs={12}  md={4} justifyContent={{xs: 'center', md: 'flex-end'}}>
+              <Grid
+                item
+                container
+                xs={12}
+                md={4}
+                justifyContent={{ xs: 'center', md: 'flex-end' }}
+              >
                 <Chip
                   sx={{
                     background:
@@ -406,14 +419,15 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
             alignItems="center"
             sx={{
               my: 2,
-              px: {xs: 0, md: 18},
+              px: { xs: 0, md: 18 },
             }}
           >
             <Grid
               item
               container
-              xs={12} md={3}
-              justifyContent={{xs: "center", md: "flex-start"}}
+              xs={12}
+              md={3}
+              justifyContent={{ xs: 'center', md: 'flex-start' }}
               alignItems="center"
             >
               <Chip
@@ -424,7 +438,12 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
                 label={`${props.delegateDetails?.voteCount} Votes`}
               />
             </Grid>
-            <Grid item xs={12} md={5} justifyContent={{xs: 'center', md: 'flex-start'}}>
+            <Grid
+              item
+              xs={12}
+              md={5}
+              justifyContent={{ xs: 'center', md: 'flex-start' }}
+            >
               <Chip
                 component="a"
                 clickable
@@ -472,7 +491,13 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
               )}
             </Grid>
 
-            <Grid item xs={12} md={3}container justifyContent={{xs: 'center', md: 'flex-end'}}>
+            <Grid
+              item
+              xs={12}
+              md={3}
+              container
+              justifyContent={{ xs: 'center', md: 'flex-end' }}
+            >
               {props.delegateDetails?.castedCount > 0 && (
                 <Chip
                   component="a"
@@ -510,12 +535,12 @@ export default function DelegateDetails(props: { delegateDetails: any }) {
             <Grid item>
               <Divider />
               <Grid
-                  width={'100wh'}
+                width={'100wh'}
                 container
                 direction="row"
                 alignItems={'center'}
                 justifyContent={'center'}
-                sx={{ px: {xs: 0, md: 18}, py: 2, mb: 2 }}
+                sx={{ px: { xs: 0, md: 18 }, py: 2, mb: 2 }}
               >
                 <Typography variant="subtitle1" color={'primary'}>
                   <Remark>

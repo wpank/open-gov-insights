@@ -30,6 +30,7 @@ import { Paper } from '@mui/material'
 import { Suspense, useEffect, useState } from 'react'
 import SvgIcon from '@mui/material/SvgIcon'
 import { ReactComponent as Logo } from '../icons/logo.svg'
+import { ReactComponent as PolkadotLogo } from '../icons/polkadot-logo.svg'
 import { useParams } from 'react-router-dom'
 import { Remark } from 'react-remark'
 import HowToVoteIcon from '@mui/icons-material/HowToVote'
@@ -59,6 +60,7 @@ import Diversity3Icon from '@mui/icons-material/Diversity3'
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { debounce } from 'lodash'
+import { useNetwork } from '../NetworkContext'
 interface VoterProps {
   address: string
   identity: {
@@ -146,8 +148,8 @@ const getStatus = (status: string) => {
 }
 
 function VoteItem(props: { vote: any }) {
-    const mobile = useMediaQuery('(min-width:600px)')
-
+  const mobile = useMediaQuery('(min-width:600px)')
+  const { network, setNetwork } = useNetwork()
   const getVoteAvatar = (voteDirection: string) => {
     switch (true) {
       case voteDirection === 'Aye':
@@ -157,11 +159,11 @@ function VoteItem(props: { vote: any }) {
               sx={{
                 background:
                   'linear-gradient(180deg, rgba(72,204,129,0.2),rgba(81,229,145,0.2))',
-                width: {xs: 24, md: 48},
-                height: {xs: 24, md: 48},
+                width: { xs: 24, md: 48 },
+                height: { xs: 24, md: 48 },
                 border: '0.1px solid  rgba(86,243,154,1)',
                 boxShadow: '0 3px 5px 2px rgba(86,243,154,0.25)',
-                mr: {xs: 0, md: 2},
+                mr: { xs: 0, md: 2 },
               }}
               variant="rounded"
             >
@@ -176,11 +178,11 @@ function VoteItem(props: { vote: any }) {
               sx={{
                 background:
                   'linear-gradient(180deg, rgba(230,0,122,0.06),rgba(230,0,122,0.2))',
-                  width: {xs: 24, md: 48},
-                  height: {xs: 24, md: 48},
+                width: { xs: 24, md: 48 },
+                height: { xs: 24, md: 48 },
                 border: '0.1px solid  rgba(230,0,122,0.6)',
                 boxShadow: '0 3px 5px 2px rgba(230,0,122,0.25)',
-                  mr: {xs: 0, md: 2},
+                mr: { xs: 0, md: 2 },
               }}
               variant="rounded"
             >
@@ -196,10 +198,10 @@ function VoteItem(props: { vote: any }) {
                 background:
                   'linear-gradient(90deg, rgba(169,204,41,0.1), rgba(190,229,46,0.1))',
                 border: '1px solid rgba(211,255,51,1)',
-                  width: {xs: 24, md: 48},
-                  height: {xs: 24, md: 48},
+                width: { xs: 24, md: 48 },
+                height: { xs: 24, md: 48 },
                 boxShadow: '0 3px 5px 2px rgba(211,255,51,0.25)',
-                  mr: {xs: 0, md: 2},
+                mr: { xs: 0, md: 2 },
               }}
               variant="rounded"
             >
@@ -228,7 +230,8 @@ function VoteItem(props: { vote: any }) {
               <Grid
                 item
                 container
-                xs={12} md={10}
+                xs={12}
+                md={10}
                 justifyContent={'flex-start'}
                 alignItems={'center'}
               >
@@ -260,8 +263,9 @@ function VoteItem(props: { vote: any }) {
               <Grid
                 item
                 container
-                xs={12} md={2}
-                justifyContent={{xs: 'center', md: 'flex-start'}}
+                xs={12}
+                md={2}
+                justifyContent={{ xs: 'center', md: 'flex-start' }}
                 alignItems={'center'}
               >
                 {getStatus(props.vote?.status)}
@@ -272,7 +276,7 @@ function VoteItem(props: { vote: any }) {
               container
               spacing={0}
               direction="row"
-              justifyContent={{xs: 'center', md: 'flex-start'}}
+              justifyContent={{ xs: 'center', md: 'flex-start' }}
               justifyItems={'center'}
               alignItems={'center'}
             >
@@ -294,7 +298,9 @@ function VoteItem(props: { vote: any }) {
                     WebkitTextFillColor: 'transparent',
                   }}
                 >
-                  {mobile ? props.vote?.address : props.vote.address.slice(0,8)}
+                  {mobile
+                    ? props.vote?.address
+                    : props.vote.address.slice(0, 8)}
                 </Typography>
                 <IconButton
                   href={`https://www.subscan.io/account/${props.vote?.address}`}
@@ -332,7 +338,7 @@ function VoteItem(props: { vote: any }) {
                 <Chip
                   icon={
                     <SvgIcon color="primary">
-                      <Logo />
+                      {network.name == 'Polkadot' ? <PolkadotLogo /> : <Logo />}
                     </SvgIcon>
                   }
                   label={
@@ -340,7 +346,7 @@ function VoteItem(props: { vote: any }) {
                       {props.vote?.voteAmount?.toLocaleString(undefined, {
                         maximumFractionDigits: 2,
                       })}{' '}
-                      KSM
+                      {network.symbol}
                     </>
                   }
                 />
@@ -358,7 +364,7 @@ function VoteItem(props: { vote: any }) {
                 />
               </Grid>
 
-              <Grid item xs={12} md={8} sx={{pt: {xs:1, md: 0}}}>
+              <Grid item xs={12} md={8} sx={{ pt: { xs: 1, md: 0 } }}>
                 <Chip
                   sx={{
                     boxShadow: '0 3px 5px 2px rgba(230,0,122,0.15)',
@@ -394,11 +400,14 @@ function VoteItem(props: { vote: any }) {
                               variant="subtitle2"
                               color="primary"
                             >
-                              {mobile ? (props.vote?.delegatingToIdentity
+                              {mobile
                                 ? props.vote?.delegatingToIdentity
-                                : props.vote?.delegatingTo) : (props.vote?.delegatingToIdentity
                                   ? props.vote?.delegatingToIdentity
-                                  : props.vote?.delegatingTo).slice(0,16)}
+                                  : props.vote?.delegatingTo
+                                : (props.vote?.delegatingToIdentity
+                                    ? props.vote?.delegatingToIdentity
+                                    : props.vote?.delegatingTo
+                                  ).slice(0, 16)}
                             </Typography>
                           </Link>
                           <IconButton
@@ -428,7 +437,11 @@ function VoteItem(props: { vote: any }) {
                     href={`/#/delegates/${props.vote.address}`}
                     icon={
                       <SvgIcon color="primary">
-                        <Logo />
+                        {network.name == 'Polkadot' ? (
+                          <PolkadotLogo />
+                        ) : (
+                          <Logo />
+                        )}
                       </SvgIcon>
                     }
                     label={
@@ -437,7 +450,7 @@ function VoteItem(props: { vote: any }) {
                           undefined,
                           { maximumFractionDigits: 2 }
                         )}{' '}
-                        KSM Delegated
+                        {network.symbol} Delegated
                       </>
                     }
                   />
@@ -510,7 +523,7 @@ function VoterList(props: { voter: VoterProps }) {
           xl: '75vw',
         },
         maxWidth: '1920px',
-        maxHeight: {xs: '90vh', md: '60vh'},
+        maxHeight: { xs: '90vh', md: '60vh' },
         my: 4,
         boxShadow: '0 3px 5px 1px rgba(230,0,122, 0.5)',
         backdropFilter: 'blur(20px)',
@@ -553,7 +566,7 @@ function VoterList(props: { voter: VoterProps }) {
               direction="row"
               alignItems={'center'}
               justifyContent={'center'}
-              sx={{ pb: {xs: 0.5, md: 2}, pt: {xs: 0.5, md: 2} }}
+              sx={{ pb: { xs: 0.5, md: 2 }, pt: { xs: 0.5, md: 2 } }}
             >
               <Grid
                 item
@@ -593,7 +606,7 @@ function VoterList(props: { voter: VoterProps }) {
                 <Typography
                   variant="h5"
                   sx={{
-                    py: {xs: 0.5, md: 2},
+                    py: { xs: 0.5, md: 2 },
                     backgroundImage: `linear-gradient(90deg, #E6007A, rgba(109,58,238,1))`,
                     backgroundSize: '100%',
                     backgroundRepeat: 'repeat',
@@ -669,7 +682,8 @@ function VoterList(props: { voter: VoterProps }) {
 }
 
 function VoterDetails(props: { voter: VoterProps }) {
-    const mobile = useMediaQuery('(min-width:600px)')
+  const { network, setNetwork } = useNetwork()
+  const mobile = useMediaQuery('(min-width:600px)')
   const getStatus = (status: string) => {
     switch (true) {
       case status === 'Ongoing':
@@ -819,7 +833,7 @@ function VoterDetails(props: { voter: VoterProps }) {
               direction="row"
               alignItems={'center'}
               justifyContent={'center'}
-              sx={{ px: {xs: 0, md: 10}, py: 2 }}
+              sx={{ px: { xs: 0, md: 10 }, py: 2 }}
             >
               <Person fontSize={'large'} color={'primary'} />
               <Typography
@@ -835,18 +849,21 @@ function VoterDetails(props: { voter: VoterProps }) {
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                {mobile ? (props.voter?.identity?.name
-                  ? props.voter?.identity.name
-                  : props.voter.address) : (props.voter?.identity?.name
+                {mobile
+                  ? props.voter?.identity?.name
                     ? props.voter?.identity.name
-                    : props.voter.address).slice(0,16)}
+                    : props.voter.address
+                  : (props.voter?.identity?.name
+                      ? props.voter?.identity.name
+                      : props.voter.address
+                    ).slice(0, 16)}
               </Typography>
             </Grid>
           </Grid>
           <Divider />
 
           <Grid
-            sx={{ my: 2, px: {xs: 0, md: 8} }}
+            sx={{ my: 2, px: { xs: 0, md: 8 } }}
             container
             direction="column"
             justifyContent={'space-between'}
@@ -866,7 +883,7 @@ function VoterDetails(props: { voter: VoterProps }) {
                 md={8}
                 alignItems={'center'}
                 alignContent={'center'}
-                justifyContent={{xs: 'center', md: 'flex-start'}}
+                justifyContent={{ xs: 'center', md: 'flex-start' }}
               >
                 <Identicon
                   theme={'polkadot'}
@@ -881,7 +898,9 @@ function VoterDetails(props: { voter: VoterProps }) {
                   }}
                   color="primary"
                 >
-                  {mobile ? props.voter?.address : props.voter?.address.slice(0,8)}
+                  {mobile
+                    ? props.voter?.address
+                    : props.voter?.address.slice(0, 8)}
                 </Typography>
                 <IconButton
                   href={`https://www.subscan.io/account/${props.voter?.address}`}
@@ -893,7 +912,13 @@ function VoterDetails(props: { voter: VoterProps }) {
                   </SvgIcon>
                 </IconButton>
               </Grid>
-              <Grid item container xs={12} md={4} justifyContent={{xs: 'center', md: 'flex-end'}}>
+              <Grid
+                item
+                container
+                xs={12}
+                md={4}
+                justifyContent={{ xs: 'center', md: 'flex-end' }}
+              >
                 <Chip
                   sx={{
                     background:
@@ -902,13 +927,13 @@ function VoterDetails(props: { voter: VoterProps }) {
                   }}
                   icon={
                     <SvgIcon color="primary">
-                      <Logo />
+                      {network.name == 'Polkadot' ? <PolkadotLogo /> : <Logo />}
                     </SvgIcon>
                   }
                   label={`Voting Balance: ${props.voter?.balance?.toLocaleString(
                     undefined,
                     { maximumFractionDigits: 2 }
-                  )} KSM`}
+                  )} ${network.symbol}`}
                 />
               </Grid>
             </Grid>
@@ -922,14 +947,15 @@ function VoterDetails(props: { voter: VoterProps }) {
             alignItems="center"
             sx={{
               mb: 2,
-              px: {xs: 0, md: 8},
+              px: { xs: 0, md: 8 },
             }}
           >
             <Grid
               item
               container
-              xs={12} md={3}
-              justifyContent={{ xs: "center", md: "flex-start"}}
+              xs={12}
+              md={3}
+              justifyContent={{ xs: 'center', md: 'flex-start' }}
               alignItems="center"
             >
               <Chip
@@ -976,7 +1002,13 @@ function VoterDetails(props: { voter: VoterProps }) {
               )}
             </Grid>
 
-            <Grid item xs={12} md={3} container justifyContent={{xs: 'center', md: 'flex-end'}}>
+            <Grid
+              item
+              xs={12}
+              md={3}
+              container
+              justifyContent={{ xs: 'center', md: 'flex-end' }}
+            >
               {props.voter?.castedVotes > 0 && (
                 <Chip
                   sx={{
@@ -1010,9 +1042,15 @@ function VoterDetails(props: { voter: VoterProps }) {
             justifyContent="center"
             alignItems="center"
             sx={{ mb: 2 }}
-            px={{xs: 0, md: 8}}
+            px={{ xs: 0, md: 8 }}
           >
-            <Grid item container xs={12} md={6} justifyContent={{xs: 'center', md: 'flex-start'}}>
+            <Grid
+              item
+              container
+              xs={12}
+              md={6}
+              justifyContent={{ xs: 'center', md: 'flex-start' }}
+            >
               {props.voter?.delegationCount > 0 && (
                 <Chip
                   component="a"
@@ -1032,17 +1070,23 @@ function VoterDetails(props: { voter: VoterProps }) {
                   href={`/#/delegates/${props.voter.address}`}
                   icon={
                     <SvgIcon color="primary">
-                      <Logo />
+                      {network.name == 'Polkadot' ? <PolkadotLogo /> : <Logo />}
                     </SvgIcon>
                   }
                   label={`${props.voter?.delegationBalance?.toLocaleString(
                     undefined,
                     { maximumFractionDigits: 2 }
-                  )} KSM Delegated`}
+                  )} ${network.symbol} Delegated`}
                 />
               )}
             </Grid>
-            <Grid container item xs={12} md={6} justifyContent={{xs: 'center', md: 'flex-end'}}>
+            <Grid
+              container
+              item
+              xs={12}
+              md={6}
+              justifyContent={{ xs: 'center', md: 'flex-end' }}
+            >
               <>{getScore(props.voter.score.normalizedScore)}</>
 
               <Chip
@@ -1073,10 +1117,11 @@ export default function VoterDetail() {
   const [voter, setVoter] = useState<any>()
   const { address } = useParams()
   const glitch = useGlitch()
+  const { network, setNetwork } = useNetwork()
 
   useEffect(() => {
     const fetchVoter = () => {
-      fetch(`${process.env.REACT_APP_API}/opengov/voter/${address}`)
+      fetch(`${network.url}/opengov/voter/${address}`)
         .then((results) => {
           return results.json()
         })

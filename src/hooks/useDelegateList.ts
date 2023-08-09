@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
+import { useNetwork } from '../NetworkContext'
 
 export const useDelegateList = () => {
   const [delegateList, setDelegateList] = useState<any>([])
   const [fetched, setFetched] = useState(false)
   const [loading, setLoading] = useState(false)
-
+  const { network, setNetwork } = useNetwork()
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API}/opengov/delegates`)
+    fetch(`${network.url}/opengov/delegates`)
       .then((results) => {
         return results.json()
       })
@@ -21,6 +22,6 @@ export const useDelegateList = () => {
       })
 
     setLoading(true)
-  }, [])
+  }, [network])
   return [delegateList, loading, fetched]
 }

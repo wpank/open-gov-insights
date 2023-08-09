@@ -23,10 +23,11 @@ import AllInclusiveIcon from '@mui/icons-material/AllInclusive'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { debounce } from 'lodash'
+import { useNetwork } from '../NetworkContext'
 
 export default function DelegateListPage() {
   const mobile = useMediaQuery('(min-width:600px)')
-
+  const { network, setNetwork } = useNetwork()
   const [q, setQ] = useState('')
   const [filterParam, setFilterParam] = useState('All')
 
@@ -213,22 +214,26 @@ export default function DelegateListPage() {
                         />
                         Nominator
                       </StyledToggleButton>
-                      <StyledToggleButton value="Society">
-                        <Diversity3Icon
-                          color="success"
-                          sx={{ pr: 1 }}
-                          fontSize="small"
-                        />
-                        Society
-                      </StyledToggleButton>
-                      <StyledToggleButton value="Fellowship">
-                        <SelfImprovementIcon
-                          color="success"
-                          sx={{ pr: 1 }}
-                          fontSize="small"
-                        />
-                        Fellowship
-                      </StyledToggleButton>
+                      {network.name == 'Kusama' ? (
+                        <StyledToggleButton value="Society">
+                          <Diversity3Icon
+                            color="success"
+                            sx={{ pr: 1 }}
+                            fontSize="small"
+                          />
+                          Society
+                        </StyledToggleButton>
+                      ) : null}
+                      {network.name == 'Kusama' ? (
+                        <StyledToggleButton value="Fellowship">
+                          <SelfImprovementIcon
+                            color="success"
+                            sx={{ pr: 1 }}
+                            fontSize="small"
+                          />
+                          Fellowship
+                        </StyledToggleButton>
+                      ) : null}
                     </StyledToggleButtonGroup>
                   </Grid>
                 </Grid>
