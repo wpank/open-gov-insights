@@ -748,7 +748,6 @@ function VoterDetails(props: { voter: VoterProps }) {
   }
 
   const getScore = (score: any) => {
-    // return <p>hello</p>
     switch (true) {
       case score > 75:
         return (
@@ -1137,7 +1136,7 @@ export default function VoterDetail() {
             abstainCount: resultsJSON.abstainCount,
             castedVotes: resultsJSON.castedVotes,
             delegatedVotes: resultsJSON.delegatedCount,
-            votes: resultsJSON.votes.map((vote: any) => {
+            votes: resultsJSON?.votes?.map((vote: any) => {
               return {
                 ...vote,
                 voteAmount:
